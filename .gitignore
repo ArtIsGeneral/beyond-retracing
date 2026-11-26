@@ -1,0 +1,10 @@
+__pycache__/
+.venv/
+demo-assets/
+demo-output/
+release-artifacts/
+
+# Manuscripts stay outside the public repository. Link the public arXiv record.
+*.pdf
+*.tex
+*.docx

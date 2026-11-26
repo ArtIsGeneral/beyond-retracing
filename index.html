@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff"><title>Beyond Retracing: Learning to Navigate from Exploration Memory</title>
+<link rel="stylesheet" href="vendor/slick.css"><link rel="stylesheet" href="style.css">
+<script defer src="vendor/jquery.min.js"></script><script defer src="vendor/slick.min.js"></script>
+<script defer src="shortcuts-data.js"></script><script defer src="shortcut-gallery.js"></script>
+</head>
+<body id="top">
+<main>
+<header class="publication wrap" aria-labelledby="project-name">
+<h1 id="project-name" lang="en">Beyond Retracing: Learning to Navigate from Exploration Memory</h1>
+<p class="byline" lang="en">Zhiyang Han</p>
+<p class="affiliation" lang="en">Tianjin University</p>
+<nav class="resource-links" aria-label="Paper resources">
+<a href="https://github.com/ArtIsGeneral/BeyondRetracing"><img src="assets/code-icon.svg" alt="">Code</a>
+<a href="#bibtex"><img src="assets/citation-icon.svg" alt="">BibTeX</a>
+</nav></header>
+<figure class="lead-demo wrap">
+<video controls muted playsinline preload="none" poster="assets/shortcuts/03.jpg" aria-label="Case 03 shortcut replay with its route and four camera views"><source src="assets/shortcuts/03.mp4" type="video/mp4"></video>
+<figcaption><strong>A shortcut before the goal comes into view.</strong> At step 7 in Case 03, the robot moves off the explored route. The target has yet to appear in any of its four navigation views. The red circle marks the key step.</figcaption>
+</figure>
+<section id="abstract" class="text-section wrap"><div><h2>Abstract</h2><p>We investigate how a single episode of visual exploration can support subsequent navigation tasks with changing starting conditions and goals. We show that a learned policy can navigate from different starting locations to a specified target and, in some tasks, take shortcuts. The model encodes four-view RGB observations, relative motion between consecutive observations, and executed actions into reusable memory. During navigation, it predicts actions directly from the goal image and current observations, without an explicit map or external localization and planning modules. We vary the start, heading, and goal across tasks that share an exploration episode. To train the policy to reuse that experience, we combine spatial supervision, teacher demonstrations, and interactive imitation learning.</p>
+<p>Across 1,433 tasks in 37 held-out indoor scenes, the model succeeds in 1,043 (72.78%); after excluding 241 collision terminations, the success rate on valid episodes is 87.50%. Clearing exploration memory or swapping the goal layout stored in it substantially reduces navigation performance. Among 208 tasks with verified shortcut opportunities, the model takes 76 successful shortcuts across 17 buildings. In 31 of these cases, the target never appeared in any navigation view before the manually annotated key step. These results show that visual memory can retain spatial information that shapes subsequent actions, allowing robots to choose new routes in environments they have already explored. Project page: <a href="https://artisgeneral.github.io/beyond-retracing/">https://artisgeneral.github.io/beyond-retracing/</a>.</p></div></section>
+<section id="approach" class="approach wrap" aria-labelledby="approach-heading">
+<h2 id="approach-heading">Approach</h2>
+<p>After exploring a building once, can a robot use what it saw to reach a different goal from a new starting point? We give the robot an image of its destination and let it reuse the same exploration memory across tasks. The challenge is to recognize the destination in that memory, find the robot’s current location, and decide which parts of the experience matter for its next move.</p>
+
+<h3>From exploration memory to the next action</h3>
+<p>During exploration, a frozen DINOv3 encoder extracts features from four RGB views at each step. We retain 16 local features per step so the robot can later recognize details such as a number on a sign. A second representation combines those features with the executed action, relative motion, and temporal information to summarize the scene at each point along the route.</p>
+<figure>
+<a href="assets/exploration-memory-policy.png"><img loading="lazy" src="assets/exploration-memory-policy.png" width="1960" height="1124" alt="Exploration produces local features and frame summaries. Separate goal and location queries read this memory, and a recurrent state selects the next action."></a>
+<figcaption>Exploration memory and navigation policy.</figcaption>
+</figure>
+<p>At each navigation step, the goal image retrieves local features from past views, while the current views and previous navigation state retrieve matching frame summaries. The policy then predicts which past locations lie on the remaining route. Those probabilities guide a closer read of the stored views. The policy updates its recurrent state and chooses one of four actions: move forward, turn left, turn right, or stop.</p>
+
+</section>
+
+<section id="replay" class="experiments" aria-labelledby="experiments-title">
+<div class="gallery-wrap">
+<h2 id="experiments-title">Navigation Experiments</h2>
+<p class="gallery-intro">Across 208 verified shortcut opportunities, the robot took 76 successful shortcuts. The three rows group them by when the target first came into view and whether it was visible just before the key step. In each replay, the red circle marks that step on the map.</p>
+<div id="shortcut-rows"></div>
+</div>
+</section>
+<dialog id="expanded-replay" aria-labelledby="expanded-title">
+<div class="dialog-bar"><h3 id="expanded-title">Shortcut replay</h3><button type="button" id="close-replay" aria-label="Close replay">Close</button></div>
+<video controls playsinline muted preload="none"></video>
+</dialog>
+<section id="bibtex" class="citation wrap" aria-labelledby="citation-title">
+<h2 id="citation-title">BibTeX</h2>
+<pre><code>@misc{han2026beyondretracing,
+  author = {Han, Zhiyang},
+  title = {Beyond Retracing: Learning to Navigate from Exploration Memory},
+  year = {2026},
+  url = {https://artisgeneral.github.io/beyond-retracing/}
+}</code></pre>
+<a href="assets/beyond-retracing.bib" download>Download .bib</a>
+</section>
+</main>
+<footer><div class="wrap"><a href="#top">Back to top ↑</a></div></footer></body></html>
