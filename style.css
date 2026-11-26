@@ -20,7 +20,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}butto
 :focus-visible{outline:3px solid #287db4;outline-offset:3px}
 .publication{text-align:center;padding:52px 0 32px}
 .publication h1{font:600 clamp(32px,4.1vw,40px)/1.125 "Google Sans",sans-serif;text-wrap:balance;max-width:950px;margin:auto}
-.byline,.affiliation{font-family:"Google Sans",sans-serif}.byline{font-size:20px;color:var(--blue);margin:22px 0 0}.affiliation{font-size:16px}.date{font-size:15px;color:var(--muted);margin:5px auto 16px}
+.byline,.affiliation{font-family:"Google Sans",sans-serif}.byline{font-size:20px;color:hsl(204,86%,53%);margin:22px 0 0}.affiliation{font-size:16px;color:#4a4a4a}.date{font-size:15px;color:var(--muted);margin:5px auto 16px}
 .resource-links{display:flex;justify-content:center;gap:7px;flex-wrap:wrap}.resource-links a,.pill{display:inline-flex;align-items:center;gap:7px;padding:6px 16px;color:white;background:#363636;border:0;border-radius:24px;font-size:15px;line-height:1.6}.resource-links a:hover,.pill:hover{color:white;background:#555;text-decoration:none}
 .lead-demo{max-width:850px;text-align:center}.lead-demo video{display:block;width:100%;aspect-ratio:980/396;background:white}
 h2{font-size:clamp(26px,3.2vw,32px);line-height:1.125;font-weight:600;text-align:center}
